@@ -1,7 +1,5 @@
-import type { UserConfig } from "vite";
-
-interface TellaConfig {
-  plugins?: UserConfig["plugins"];
+export interface TellaConfig {
+  plugins?: Array<string>;
 }
 
 export function defineTellaConfig(config: TellaConfig = {}): TellaConfig {

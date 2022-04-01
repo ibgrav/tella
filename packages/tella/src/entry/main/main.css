@@ -1,0 +1,43 @@
+main {
+  height: 100%;
+  grid-column-start: 2;
+  grid-column-end: 7;
+  overflow: scroll;
+  padding: 1em;
+}
+
+.main__container {
+  position: relative;
+  padding-top: 50px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 1px 5px 0px;
+  border-radius: 0.3em;
+  background: rgb(127, 127, 127);
+  height: 100%;
+  width: 100%;
+}
+
+header {
+  position: absolute;
+  inset: 0;
+  height: 50px;
+  width: 100%;
+  background: white;
+  padding: 0 1em;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
+}
+
+.iframe__container {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  padding: 0.5em;
+}
+
+iframe {
+  border: none;
+  background: white;
+}
