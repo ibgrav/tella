@@ -1,0 +1,16 @@
+{
+  //editor
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  //prettier
+  "prettier.printWidth": 128,
+
+  //misc
+  "css.lint.unknownAtRules": "ignore",
+  "emmet.excludeLanguages": ["js", "jsx", "ts", "tsx"],
+
+  "files.exclude": {
+    "**/tsconfig.tsbuildinfo": true
+  }
+}

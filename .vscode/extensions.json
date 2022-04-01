@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "silvenon.mdx",
+    "csstools.postcss",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-azuretools.vscode-docker",
+    "visualstudioexptteam.vscodeintellicode",
+    "styled-components.vscode-styled-components"
+  ]
+}
