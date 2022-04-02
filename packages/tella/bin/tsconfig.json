@@ -11,5 +11,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["./*.ts", "../index.d.ts"]
+  "include": ["./*.ts", "index.d.ts"]
 }
