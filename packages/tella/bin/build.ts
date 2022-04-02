@@ -7,14 +7,16 @@ import { document } from "./document";
 export async function build() {
   const { sharedConfig, tellaConfig } = await getSharedConfig();
 
-  const out_dir = join(process.cwd(), tellaConfig.outDir || "dist_tella");
+  console.log(tellaConfig);
+
+  const outDir = join(process.cwd(), tellaConfig.outDir || "dist_tella");
 
   const result: any = await viteBuild({
     ...sharedConfig,
     build: {
-      minify: false,
-      outDir: out_dir,
+      outDir,
       manifest: true,
+      minify: tellaConfig?.minify ?? true,
       rollupOptions: {
         input: {
           index: join(__dirname, "../src/index.ts"),
@@ -30,12 +32,12 @@ export async function build() {
   for await (const [path, item] of Object.entries(manifest)) {
     if (path.endsWith("tella/src/index.ts")) {
       const index = document({ tellaConfig, src: (item as any).file, css: (item as any).css });
-      await writeFile(join(out_dir, "index.html"), index, "utf-8");
+      await writeFile(join(outDir, "index.html"), index, "utf-8");
     }
 
     if (path.endsWith("tella/src/story.ts")) {
       const story = document({ tellaConfig, src: (item as any).file, css: (item as any).css });
-      await writeFile(join(out_dir, "story.html"), story, "utf-8");
+      await writeFile(join(outDir, "story.html"), story, "utf-8");
     }
   }
 }
