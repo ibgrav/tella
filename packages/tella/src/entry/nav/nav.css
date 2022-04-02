@@ -1,7 +1,0 @@
-nav {
-  height: 100%;
-  overflow: scroll;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  padding: 1em;
-}
