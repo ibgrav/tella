@@ -18,5 +18,5 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "index.d.ts"]
+  "include": ["src", "bin", "index.d.ts"]
 }
