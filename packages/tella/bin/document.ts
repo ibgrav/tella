@@ -8,7 +8,7 @@ interface DocumentProps {
 
 export function document({ src, css = [], tellaConfig }: DocumentProps) {
   const { title = "" } = tellaConfig;
-  const links = css.map((href) => `<link rel="stylesheet" href="/${href}">`);
+  const links = css.map((href) => `<link rel="stylesheet" href="${href}">`);
 
   return `<!DOCTYPE html>
   <html>
@@ -18,7 +18,7 @@ export function document({ src, css = [], tellaConfig }: DocumentProps) {
     </head>
     <body>
       <div id="tella-root"></div>
-      <script type="module" src="/${src}"></script>
+      <script type="module" src="${src}"></script>
     </body>
   </html>`;
 }

@@ -7,7 +7,7 @@ import { document } from "./document";
 export async function build() {
   const { sharedConfig, tellaConfig } = await getSharedConfig();
 
-  const out_dir = join(process.cwd(), "dist_tella");
+  const out_dir = join(process.cwd(), tellaConfig.outDir || "dist_tella");
 
   const result: any = await viteBuild({
     ...sharedConfig,

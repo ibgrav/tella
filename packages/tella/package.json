@@ -1,6 +1,6 @@
 {
   "name": "tella",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "types": "index.d.ts",
   "bin": {
     "tella": "dist/run.js"

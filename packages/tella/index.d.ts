@@ -16,4 +16,5 @@ export interface TellaConfig<S = any> {
   type?: "react" | "vue" | "preact";
   alias?: Record<string, string>;
   sizes?: StorySize[];
+  outDir: string;
 }
