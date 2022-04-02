@@ -26,11 +26,15 @@ export async function build() {
   const manifest_raw = result.output.find((output: any) => output.fileName === "manifest.json");
   const manifest = JSON.parse(manifest_raw.source);
 
-  const entry_manifest = manifest["../tella/src/entry/entry.tsx"];
-  const entry = document({ src: entry_manifest.file, css: entry_manifest.css });
-  await writeFile(join(out_dir, "index.html"), entry, "utf-8");
+  for await (const [path, item] of Object.entries(manifest)) {
+    if (path.endsWith("tella/src/entry/entry.tsx")) {
+      const entry = document({ src: (item as any).file, css: (item as any).css });
+      await writeFile(join(out_dir, "index.html"), entry, "utf-8");
+    }
 
-  const story_manifest = manifest["../tella/src/story/story.tsx"];
-  const story = document({ src: story_manifest.file, css: story_manifest.css });
-  await writeFile(join(out_dir, "story.html"), story, "utf-8");
+    if (path.endsWith("tella/src/story/story.tsx")) {
+      const entry = document({ src: (item as any).file, css: (item as any).css });
+      await writeFile(join(out_dir, "story.html"), entry, "utf-8");
+    }
+  }
 }
