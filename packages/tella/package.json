@@ -1,6 +1,6 @@
 {
   "name": "tella",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "bin",
   "types": "index.d.ts",
   "bin": {
