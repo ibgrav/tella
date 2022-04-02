@@ -2,13 +2,12 @@ import { Stories, TellaConfig } from "../index";
 
 declare global {
   interface Window {
-    TELLA_CONFIG: TellaConfig;
-    TELLA_STORIES: Stories;
+    TELLA_CONTEXT: {
+      config: TellaConfig;
+      stories: Stories;
+    };
   }
 }
 
-export async function setWindow() {
-  const { config, stories } = await (await fetch("tella.json")).json();
-  window.TELLA_CONFIG = config;
-  window.TELLA_STORIES = stories;
-}
+export const config = window.TELLA_CONTEXT.config;
+export const stories = window.TELLA_CONTEXT.stories;

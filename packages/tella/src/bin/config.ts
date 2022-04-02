@@ -3,7 +3,7 @@ import { createServer, InlineConfig } from "vite";
 import { TellaConfig, defineTellaConfig } from "../index";
 
 export async function getSharedConfig() {
-  const tellaConfig = await getTellaConfig();
+  const config = await getTellaConfig();
 
   const plugins: any[] = [];
 
@@ -17,7 +17,7 @@ export async function getSharedConfig() {
   }
 
   const sharedConfig = {
-    publicDir: tellaConfig.publicDir || false,
+    publicDir: config.publicDir || false,
     configFile: false,
     plugins,
     resolve: {
@@ -25,12 +25,12 @@ export async function getSharedConfig() {
     },
   };
 
-  for (const [key, path] of Object.entries(tellaConfig.alias || {})) {
+  for (const [key, path] of Object.entries(config.alias || {})) {
     const replacement = join(process.cwd(), path);
     sharedConfig!.resolve!.alias!.push({ find: key, replacement });
   }
 
-  return { sharedConfig: sharedConfig as InlineConfig, tellaConfig };
+  return { sharedConfig: sharedConfig as InlineConfig, config };
 }
 
 export async function getTellaConfig(): Promise<TellaConfig> {

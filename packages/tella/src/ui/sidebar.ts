@@ -1,10 +1,9 @@
 import type { Stories, StoryInstance } from "../index";
 import html from "../lib/html";
 import { path_param, story_param } from "../lib/params";
+import { stories } from "../lib/window";
 
 export function sidebar() {
-  const stories = window.TELLA_STORIES;
-
   return html`<nav>
     <h1>Tella Stories</h1>
     ${sidebarItem(stories, "")}

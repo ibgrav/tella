@@ -8,7 +8,7 @@ import { getStories } from "./stories";
 const port = parseInt(process.env.PORT || "6001");
 
 export async function dev() {
-  const { sharedConfig, tellaConfig } = await getSharedConfig();
+  const { sharedConfig, config } = await getSharedConfig();
 
   const vite = await createServer({
     ...sharedConfig,
@@ -19,10 +19,11 @@ export async function dev() {
     vite.middlewares(req, res, async () => {
       const url = req.url || "/";
 
+      const { stories } = await getStories(vite);
+
       if (url.startsWith("/tella.json")) {
-        const { stories } = await getStories(vite);
         res.setHeader("conten-type", "application/json");
-        res.end(JSON.stringify({ config: tellaConfig, stories }, null, 2));
+        res.end(JSON.stringify({ config, stories }, null, 2));
         return;
       }
 
@@ -32,7 +33,7 @@ export async function dev() {
         src = "node_modules/tella/src/story/render.story.ts";
       }
 
-      let doc = document({ command: "dev", src, tellaConfig });
+      let doc = document({ command: "dev", stories, src, config });
       doc = await vite.transformIndexHtml(req.url || "/", doc);
 
       res.statusCode = 200;

@@ -1,8 +1,9 @@
 import html from "../lib/html";
+import { config } from "../lib/window";
 import { width_param, height_param } from "../lib/params";
 
 export function main() {
-  const { base } = window.TELLA_CONFIG;
+  const { base } = config;
 
   return html`
     <main>
