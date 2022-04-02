@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tella": "tella dev"
+    "tella": "tella dev",
+    "tella:build": "tella build"
   },
   "dependencies": {
     "react": "^18.0.0",
