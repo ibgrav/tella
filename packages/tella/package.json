@@ -1,6 +1,6 @@
 {
   "name": "tella",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "bin",
   "types": "index.d.ts",
   "bin": {
@@ -8,9 +8,9 @@
   },
   "files": [
     "bin",
-    "dist",
     "src",
-    "index.d.ts"
+    "index.d.ts",
+    "tsconfig.json"
   ],
   "engines": {
     "node": ">=14.0"

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { Server } from "http";
 import { createServer } from "vite";
 
