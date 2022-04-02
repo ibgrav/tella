@@ -1,13 +1,14 @@
 {
   "name": "tella",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "types": "index.d.ts",
   "bin": {
     "tella": "dist/run.js"
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "index.d.ts"
   ],
   "engines": {
     "node": ">=14.0"

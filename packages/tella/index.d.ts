@@ -2,6 +2,7 @@ interface RenderProps<S> {
   root: HTMLElement;
   Story: S;
 }
+
 export type Render<S> = (props: RenderProps<S>) => void;
 
 export interface StorySize {
