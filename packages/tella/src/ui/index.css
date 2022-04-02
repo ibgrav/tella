@@ -28,7 +28,7 @@ main {
   grid-column-start: 2;
   grid-column-end: 7;
   overflow: scroll;
-  padding: 1rem;
+  padding: 1rem 0.5rem 0.5rem 1rem;
 }
 
 .main__container {

@@ -1,20 +1,23 @@
 import { join } from "path";
-import pluginVue from "@vitejs/plugin-vue";
-import pluginReact from "@vitejs/plugin-react";
-import pluginPreact from "@preact/preset-vite";
 import { createServer, InlineConfig } from "vite";
-import type { TellaConfig } from "../index";
+import { TellaConfig, defineTellaConfig } from "../index";
 
 export async function getSharedConfig() {
   const tellaConfig = await getTellaConfig();
 
-  const plugins = [];
+  const plugins: any[] = [];
 
-  if (tellaConfig.type === "vue") plugins.push(pluginVue());
-  if (tellaConfig.type === "react") plugins.push(pluginReact());
-  if (tellaConfig.type === "preact") plugins.push(pluginPreact());
+  const plugin_names = ["@vitejs/plugin-vue", "@vitejs/plugin-react", "@preact/preset-vite", "@sveltejs/vite-plugin-svelte"];
+
+  for await (const name of plugin_names) {
+    try {
+      const pluginVue = (await import(name)).default;
+      plugins.push(pluginVue());
+    } catch (e) {}
+  }
 
   const sharedConfig = {
+    publicDir: tellaConfig.publicDir || false,
     configFile: false,
     plugins,
     resolve: {
@@ -34,12 +37,7 @@ export async function getTellaConfig(): Promise<TellaConfig> {
   const vite = await createServer({ server: { middlewareMode: "ssr" } });
   const extensions = ["js", "jsx", "ts", "tsx"];
 
-  let tellaConfig: TellaConfig = {
-    title: "Tella Stories",
-    render: () => {
-      console.error("missing tella.config.{js|jsx|ts|tsx} render function");
-    },
-  };
+  let tellaConfig = defineTellaConfig();
 
   for await (const ext of extensions) {
     try {

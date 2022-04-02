@@ -3,6 +3,7 @@ import { createServer } from "vite";
 
 import { getSharedConfig } from "./config";
 import { document } from "./document";
+import { getStories } from "./stories";
 
 const port = parseInt(process.env.PORT || "6001");
 
@@ -18,13 +19,20 @@ export async function dev() {
     vite.middlewares(req, res, async () => {
       const url = req.url || "/";
 
-      let src = "node_modules/tella/src/index.ts";
-
-      if (url.startsWith("/story.html")) {
-        src = "node_modules/tella/src/story.ts";
+      if (url.startsWith("/tella.json")) {
+        const { stories } = await getStories(vite);
+        res.setHeader("conten-type", "application/json");
+        res.end(JSON.stringify({ config: tellaConfig, stories }, null, 2));
+        return;
       }
 
-      let doc = document({ src, tellaConfig });
+      let src = "node_modules/tella/src/ui/render.ui.ts";
+
+      if (url.startsWith("/story.html")) {
+        src = "node_modules/tella/src/story/render.story.ts";
+      }
+
+      let doc = document({ command: "dev", src, tellaConfig });
       doc = await vite.transformIndexHtml(req.url || "/", doc);
 
       res.statusCode = 200;
