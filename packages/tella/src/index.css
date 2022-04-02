@@ -20,7 +20,7 @@ body {
   height: 100vh;
   overflow: hidden;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-tremplate-columns: repeat(6, 1fr);
 }
 
 main {
@@ -28,14 +28,14 @@ main {
   grid-column-start: 2;
   grid-column-end: 7;
   overflow: scroll;
-  padding: 1em;
+  padding: 1rem;
 }
 
 .main__container {
   position: relative;
   padding-top: 50px;
   box-shadow: rgb(0 0 0 / 10%) 0px 1px 5px 0px;
-  border-radius: 0.3em;
+  border-radius: 0.3rem;
   background: rgb(127, 127, 127);
   height: 100%;
   width: 100%;
@@ -47,19 +47,19 @@ header {
   height: 50px;
   width: 100%;
   background: white;
-  padding: 0 1em;
+  padding: 0 1rem;
   display: flex;
   flex-flow: row;
   align-items: center;
-  border-top-left-radius: 0.3em;
-  border-top-right-radius: 0.3em;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
 }
 
 .iframe__container {
   width: 100%;
   height: 100%;
   overflow: scroll;
-  padding: 0.5em;
+  padding: 0.5rem;
 }
 
 iframe {
@@ -72,5 +72,35 @@ nav {
   overflow: scroll;
   grid-column-start: 1;
   grid-column-end: 2;
-  padding: 1em;
+}
+
+h1 {
+  padding: 1rem 0.5rem;
+}
+
+details {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+details:hover {
+  cursor: pointer;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details a {
+  display: block;
+  margin-left: 1rem;
+}
+
+a.active {
+  color: red;
+  font-weight: bold;
 }

@@ -7,7 +7,7 @@ import { document } from "./document";
 const port = parseInt(process.env.PORT || "6001");
 
 export async function dev() {
-  const { sharedConfig } = await getSharedConfig();
+  const { sharedConfig, tellaConfig } = await getSharedConfig();
 
   const vite = await createServer({
     ...sharedConfig,
@@ -18,13 +18,13 @@ export async function dev() {
     vite.middlewares(req, res, async () => {
       const url = req.url || "/";
 
-      let src = "node_modules/tella/src/entry/entry.tsx";
+      let src = "node_modules/tella/src/index.ts";
 
       if (url.startsWith("/story.html")) {
-        src = "node_modules/tella/src/story/story.tsx";
+        src = "node_modules/tella/src/story.ts";
       }
 
-      let doc = document({ src });
+      let doc = document({ src, tellaConfig });
       doc = await vite.transformIndexHtml(req.url || "/", doc);
 
       res.statusCode = 200;

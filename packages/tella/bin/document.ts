@@ -1,16 +1,19 @@
+import { TellaConfig } from "../index";
+
 interface DocumentProps {
   src: string;
-  title?: string;
   css?: string[];
+  tellaConfig: TellaConfig;
 }
 
-export function document({ title, src, css = [] }: DocumentProps) {
+export function document({ src, css = [], tellaConfig }: DocumentProps) {
+  const { title = "" } = tellaConfig;
   const links = css.map((href) => `<link rel="stylesheet" href="/${href}">`);
 
   return `<!DOCTYPE html>
   <html>
     <head>
-      <title>${title || ""}</title>
+      <title>${title}</title>
       ${links}
     </head>
     <body>

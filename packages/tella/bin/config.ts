@@ -1,14 +1,22 @@
 import { join } from "path";
+import pluginVue from "@vitejs/plugin-vue";
 import pluginReact from "@vitejs/plugin-react";
+import pluginPreact from "@preact/preset-vite";
 import { createServer, InlineConfig } from "vite";
 import type { TellaConfig } from "../index";
 
 export async function getSharedConfig() {
   const tellaConfig = await getTellaConfig();
 
+  const plugins = [];
+
+  if (tellaConfig.type === "vue") plugins.push(pluginVue());
+  if (tellaConfig.type === "react") plugins.push(pluginReact());
+  if (tellaConfig.type === "preact") plugins.push(pluginPreact());
+
   const sharedConfig = {
     configFile: false,
-    plugins: [pluginReact()],
+    plugins,
     resolve: {
       alias: [{ find: "root", replacement: join(process.cwd()) }],
     },
@@ -26,16 +34,20 @@ export async function getTellaConfig(): Promise<TellaConfig> {
   const vite = await createServer({ server: { middlewareMode: "ssr" } });
   const extensions = ["js", "jsx", "ts", "tsx"];
 
-  let tellaConfig: TellaConfig = {};
+  let tellaConfig: TellaConfig = {
+    title: "Tella Stories",
+    render: () => {
+      console.error("missing tella.config.{js|jsx|ts|tsx} render function");
+    },
+  };
 
   for await (const ext of extensions) {
     try {
       const config_path = join(process.cwd(), `tella.config.${ext}`);
-      tellaConfig = (await vite.ssrLoadModule(config_path)).default;
+      const config = await vite.ssrLoadModule(config_path);
+      tellaConfig = config.default;
       break;
-    } catch (e) {
-      console.log((e as Error).message);
-    }
+    } catch (e) {}
   }
 
   await vite.close();

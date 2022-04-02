@@ -1,10 +1,17 @@
 import type { TellaConfig } from "tella";
-import { Wrapper } from "./src/Wrapper";
+import type { ComponentType } from "react";
+import { render } from "react-dom";
 
-const config: TellaConfig = {
-  ReactWrapper: Wrapper,
+import "src/index.css";
+
+const config: TellaConfig<ComponentType<any>> = {
+  title: "Example Stories",
+  type: "react",
   alias: {
     src: "./src",
+  },
+  render: ({ root, Story }) => {
+    render(<Story />, root);
   },
 };
 
