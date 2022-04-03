@@ -4,7 +4,8 @@ import fastGlob from "fast-glob";
 import { dset } from "dset";
 
 export async function getStories(vite: ViteDevServer) {
-  const glob = await fastGlob(`${process.cwd()}/**/*.stories.tsx`);
+  const glob = await fastGlob(`${process.cwd()}/**/*.stories.{ts,tsx}`);
+  console.log({ glob });
 
   const stories: Stories = {};
 

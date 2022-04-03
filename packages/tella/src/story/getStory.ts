@@ -3,7 +3,7 @@ import dlv from "dlv";
 import { path_param, story_param } from "../lib/params";
 import { stories } from "../lib/window";
 
-export const storiesGlob = import.meta.globEager(`root/**/*.stories.tsx`);
+export const storiesGlob = import.meta.globEager(`root/**/*.stories.{ts,tsx}`);
 
 export function getStory() {
   const storyInstance = path_param && (dlv(stories, path_param.split("/")) as StoryInstance);

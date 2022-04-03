@@ -10,7 +10,9 @@ const root = document.getElementById("tella-root")!;
 (async () => {
   const { Story } = getStory();
 
-  if (Story && typeof render === "function") {
+  console.log({ Story, render });
+
+  if (Story) {
     render({ root, Story });
   } else {
     root.innerHTML = `<div>no story found - ${location.href}</div>`;
