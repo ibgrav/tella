@@ -2,6 +2,6 @@
   "name": "@ibgrav/tella-repo",
   "private": true,
   "scripts": {
-    "build": "pnpm -F tella build && pnpm install"
+    "example": "pnpm -F tella build && pnpm install && pnpm -F"
   }
 }

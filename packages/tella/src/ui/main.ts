@@ -1,5 +1,5 @@
 import html from "../lib/html";
-import { config } from "../lib/window";
+import { config } from "../lib/params";
 import { width_param, height_param } from "../lib/params";
 
 export function main() {

@@ -1,39 +1,25 @@
+import type { Stories, TellaConfig } from "..";
+import { InlineConfig, createServer } from "vite";
 import { Server } from "http";
-import { createServer } from "vite";
+import { document } from "./document.js";
 
-import { getSharedConfig } from "./config";
-import { document } from "./document";
-import { getStories } from "./stories";
+export async function dev(stories: Stories, userConfig: TellaConfig, viteConfig: InlineConfig) {
+  const vite = await createServer(viteConfig);
 
-const port = parseInt(process.env.PORT || "6001");
-
-export async function dev() {
-  const { sharedConfig, config } = await getSharedConfig();
-
-  const vite = await createServer({
-    ...sharedConfig,
-    server: { middlewareMode: "ssr" },
-  });
+  //do not accept user base in dev mode
+  userConfig.base = "";
 
   const server = new Server((req, res) => {
     vite.middlewares(req, res, async () => {
       const url = req.url || "/";
 
-      const { stories } = await getStories(vite);
-
-      if (url.startsWith("/tella.json")) {
-        res.setHeader("conten-type", "application/json");
-        res.end(JSON.stringify({ config, stories }, null, 2));
-        return;
-      }
-
-      let src = "node_modules/tella/src/ui/render.ui.ts";
+      let src = "node_modules/tella/src/ui/index.ui.ts";
 
       if (url.startsWith("/story.html")) {
-        src = "node_modules/tella/src/story/render.story.ts";
+        src = "node_modules/tella/src/story/index.story.ts";
       }
 
-      let doc = document({ command: "dev", stories, src, config });
+      let doc = document({ src, stories, userConfig });
       doc = await vite.transformIndexHtml(req.url || "/", doc);
 
       res.statusCode = 200;
@@ -42,7 +28,9 @@ export async function dev() {
     });
   });
 
+  const port = parseInt(process.env.PORT || "6001");
+
   server.listen(port, () => {
-    console.log(`\ntella at http://localhost:${port}/\n`);
+    console.log(`\n📚 http://localhost:${port}/ 📚\n`);
   });
 }

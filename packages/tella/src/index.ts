@@ -1,6 +1,32 @@
+import type { PluginOption } from "vite";
+
 export interface StorySize {
   width: number;
   height: number;
+}
+
+export interface TellaConfig {
+  plugins: Array<PluginOption | Array<PluginOption>>;
+  base?: string;
+  title?: string;
+  alias?: Record<string, string>;
+  sizes?: Array<StorySize>;
+  outDir?: string;
+  minify?: boolean;
+  clean?: boolean;
+  publicDir?: string | false;
+}
+
+export function defineTellaConfig(config: TellaConfig): TellaConfig {
+  return {
+    base: "/",
+    title: "Tella Stories",
+    outDir: "dist_tella",
+    publicDir: false,
+    minify: true,
+    clean: true,
+    ...config,
+  };
 }
 
 interface TellaRenderProps<S> {
@@ -8,29 +34,10 @@ interface TellaRenderProps<S> {
   Story: S;
 }
 
-export type TellaRender<S = unknown> = (props: TellaRenderProps<S>) => void;
+export type TellaRenderFunction<S = unknown> = (props: TellaRenderProps<S>) => void;
 
-export interface TellaConfig<S = unknown> {
-  base?: string;
-  title?: string;
-  alias?: Record<string, string>;
-  sizes?: StorySize[];
-  outDir?: string;
-  minify?: boolean;
-  publicDir?: string | boolean;
-  render: TellaRender<S>;
-}
-
-export function defineTellaConfig<S = unknown>(config: TellaConfig<S> = { render() {} }): TellaConfig<S> {
-  return {
-    base: "/",
-    title: "Tella Stories",
-    sizes: [{ width: 1920, height: 1080 }],
-    outDir: "dist_tella",
-    publicDir: false,
-    minify: true,
-    ...config,
-  };
+export function defineTellaRender<S = unknown>(tellaRenderFunction: TellaRenderFunction<S>): TellaRenderFunction<S> {
+  return tellaRenderFunction;
 }
 
 export interface StoryConfig {
@@ -40,7 +47,7 @@ export interface StoryConfig {
 export interface StoryInstance {
   __path: string;
   __config: StoryConfig;
-  __stories: string[];
+  __stories: Array<string>;
 }
 
 export interface Stories {

@@ -1,7 +1,7 @@
-import type { Stories, StoryInstance } from "../index";
+import type { Stories, StoryInstance } from "..";
 import html from "../lib/html";
-import { path_param, story_param } from "../lib/params";
-import { stories } from "../lib/window";
+import { pathParam, storyParam } from "../lib/params";
+import { stories } from "../lib/params";
 
 export function sidebar() {
   return html`<nav>
@@ -15,7 +15,7 @@ function sidebarItem(item: Stories | StoryInstance, path: string): string {
 
   if (item.__config) {
     const links = (item.__stories as string[]).map((name) => {
-      const active = path_param?.startsWith(path) && name === story_param;
+      const active = pathParam?.startsWith(path) && name === storyParam;
       return html`<a class="${active ? "active" : ""}" href="?path=${path}&story=${name}">${name}</a>`;
     });
     return links.join("");
@@ -23,7 +23,7 @@ function sidebarItem(item: Stories | StoryInstance, path: string): string {
 
   const details = Object.entries(item).map(([key, val]) => {
     const path_new = path ? `${path}/${key}` : key;
-    const active = path_param && path_param?.startsWith(path_new);
+    const active = pathParam && pathParam?.startsWith(path_new);
 
     return html`
       <details class="${parent ? "parent" : ""}" ${active ? "open" : ""}>
