@@ -103,7 +103,5 @@ export default defineTellaRender${IS_TS ? `<${render.typeGeneric || render.type}
 
   await writeFile(join(process.cwd(), renderFileName), tellaRender);
 
-  if (!dependencies[plugin.name] && !devDependencies[plugin.name]) {
-    console.warn("WARNING: missing required plugin", plugin.name);
-  }
+  console.log(`\nnpm install -D tella ${plugin.name}\n`);
 }
