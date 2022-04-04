@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "tella": "tella dev",
+    "tella:create": "tella create --typescript",
     "tella:build": "tella build"
   },
   "dependencies": {

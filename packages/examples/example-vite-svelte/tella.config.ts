@@ -1,6 +1,6 @@
 import { defineTellaConfig } from "tella";
-import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { svelte as pluginSvelte } from "@sveltejs/vite-plugin-svelte";
 
 export default defineTellaConfig({
-  plugins: [svelte()],
+  plugins: [pluginSvelte()],
 });

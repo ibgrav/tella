@@ -4,6 +4,7 @@ import { join } from "path";
 import { createServer, InlineConfig } from "vite";
 import { defineTellaConfig, TellaConfig } from "../define.js";
 import { findFilePath } from "./find-file-path.js";
+import { create } from "./create.js";
 import { dev } from "./dev.js";
 import { build } from "./build.js";
 
@@ -12,6 +13,8 @@ const [, , arg] = process.argv;
 exec(arg);
 
 async function exec(arg: string) {
+  if (arg === "create") return await create();
+
   let vite = await createServer();
 
   const configFilePath = await findFilePath("tella.config");
