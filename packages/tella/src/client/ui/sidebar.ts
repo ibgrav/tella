@@ -1,6 +1,6 @@
 import type { Stories, StoryInstance } from "../..";
-import html from "../html.js";
-import { stories, pathParam, storyParam } from "../params.js";
+import html from "../html";
+import { stories, pathParam, storyParam } from "../params";
 
 export function sidebar() {
   return html`<nav>

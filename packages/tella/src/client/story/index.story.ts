@@ -1,12 +1,8 @@
-// import { getCurrentStory } from "../../stories.js";
-import { pathParam, storyParam } from "../params.js";
-import { findRender } from "./findRender.js";
+import { getCurrentStory } from "../../stories";
+import { pathParam, storyParam } from "../params";
+import { findRender } from "./findRender";
 
 const root = document.getElementById("tella-root")!;
-
-const getCurrentStory = (pathParam: string | null, storyParam: string | null) => {
-  return () => [pathParam, storyParam, "story!"].join(" ");
-};
 
 (async () => {
   const render = findRender();

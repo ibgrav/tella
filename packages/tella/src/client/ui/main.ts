@@ -1,4 +1,4 @@
-import html from "../html.js";
+import html from "../html";
 import { config, width_param, height_param } from "../params";
 
 export function main() {
