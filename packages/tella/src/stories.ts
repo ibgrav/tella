@@ -1,6 +1,6 @@
 import type { Stories, StoryInstance } from "./index";
-import { dset } from "./lib/dset";
-import { dlv } from "./lib/dlv";
+import { dset } from "./lib/dset.js";
+import { dlv } from "./lib/dlv.js";
 
 const storiesGlob = import.meta.globEager(`tella_root/**/*.stories.{js,jsx,ts,tsx,md,mdx}`);
 

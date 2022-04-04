@@ -1,5 +1,5 @@
-import { access } from "fs/promises";
 import { join } from "path";
+import { access } from "fs/promises";
 
 export async function findFilePath(name: string) {
   const folders = ["", ".tella", "src", ".storybook"];
