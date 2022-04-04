@@ -15,10 +15,10 @@ export async function dev(userConfig: TellaConfig, viteConfig: InlineConfig) {
 
       const stories: Stories = (await vite.ssrLoadModule("tella/src/stories.ts")).stories;
 
-      let src = "node_modules/tella/src/ui/index.ui.ts";
+      let src = "node_modules/tella/src/client/ui/index.ui.ts";
 
       if (url.startsWith("/story.html")) {
-        src = "node_modules/tella/src/story/index.story.ts";
+        src = "node_modules/tella/src/client/story/index.story.ts";
       }
 
       let doc = document({ src, stories, userConfig });

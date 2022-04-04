@@ -1,5 +1,5 @@
-import html from "../lib/html.js";
-import { config, width_param, height_param } from "../lib/params";
+import html from "../html.js";
+import { config, width_param, height_param } from "../params";
 
 export function main() {
   const { base } = config;

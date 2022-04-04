@@ -1,4 +1,4 @@
-import type { TellaRenderFunction } from "..";
+import type { TellaRenderFunction } from "../..";
 
 export function findRender(): TellaRenderFunction | undefined {
   const rootGlob = import.meta.globEager("tella_root/tella.render.*");

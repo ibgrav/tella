@@ -17,8 +17,8 @@ export async function build(userConfig: TellaConfig, viteConfig: InlineConfig) {
     } catch (e) {}
   }
 
-  const inputUI = "tella/src/ui/index.ui.ts";
-  const inputStory = "tella/src/story/index.story.ts";
+  const inputUI = "tella/src/client/ui/index.ui.ts";
+  const inputStory = "tella/src/client/story/index.story.ts";
 
   const result = (await viteBuild({
     ...viteConfig,

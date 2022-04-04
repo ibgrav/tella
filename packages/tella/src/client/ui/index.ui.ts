@@ -1,5 +1,5 @@
-import html from "../lib/html.js";
-import { sidebar } from "./sidebar.js";
+import html from "../html";
+import { sidebar } from "./sidebar";
 
 import "./index.css";
 import { main } from "./main";
