@@ -1,6 +1,6 @@
 {
   "name": "tella",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "type": "module",
   "types": "dist",
   "main": "dist/index.js",

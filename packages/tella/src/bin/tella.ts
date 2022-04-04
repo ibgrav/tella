@@ -28,6 +28,7 @@ async function exec(arg: string) {
     publicDir: userConfig.publicDir || false,
     server: { middlewareMode: "ssr" },
     optimizeDeps: {
+      include: ["tella"],
       entries: [],
     },
     resolve: {
