@@ -1,6 +1,6 @@
 import type { Stories, StoryInstance } from "./index";
-import { dset } from "dset";
-import dlv from "dlv";
+import { dset } from "./lib/dset";
+import { dlv } from "./lib/dlv";
 
 const storiesGlob = import.meta.globEager(`tella_root/**/*.stories.{js,jsx,ts,tsx,md,mdx}`);
 
@@ -14,7 +14,7 @@ for (const [__path, mod] of Object.entries(storiesGlob)) {
 }
 
 export function getCurrentStory(pathParam: string | null, storyParam: string | null): unknown {
-  const currentStories = pathParam && (dlv(stories, pathParam.split("/")) as StoryInstance);
+  const currentStories = pathParam && dlv<StoryInstance>(stories, pathParam.split("/"));
 
   const storyPath = (currentStories && Object.keys(storiesGlob).find((path) => path.endsWith(currentStories.__path))) || "";
 
