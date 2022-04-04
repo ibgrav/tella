@@ -1,8 +1,9 @@
-import type { Stories, TellaConfig } from "..";
+import type { Stories, TellaConfig } from "../define";
 import { join } from "path";
-import { rm, writeFile } from "fs/promises";
+import { copyFile, rm, writeFile } from "fs/promises";
 import { InlineConfig, build as viteBuild, Manifest, createServer } from "vite";
 import { document } from "./document.js";
+import { getUIManifestChunk, storyRenderPath, getStoriesPath, uiDistRelativePath } from "./manifest.js";
 
 interface BuildResult {
   output: Array<{ fileName: string; source: string }>;
@@ -17,8 +18,7 @@ export async function build(userConfig: TellaConfig, viteConfig: InlineConfig) {
     } catch (e) {}
   }
 
-  const inputUI = "tella/src/client/ui/index.ui.ts";
-  const inputStory = "tella/src/client/story/index.story.ts";
+  const storyFilePath = `node_modules/tella/${storyRenderPath}`;
 
   const result = (await viteBuild({
     ...viteConfig,
@@ -28,31 +28,34 @@ export async function build(userConfig: TellaConfig, viteConfig: InlineConfig) {
       minify: userConfig?.minify ?? true,
       rollupOptions: {
         input: {
-          ui: `node_modules/${inputUI}`,
-          story: `node_modules/${inputStory}`,
+          story: storyFilePath,
         },
       },
     },
   })) as BuildResult;
 
   const vite = await createServer(viteConfig);
-  const stories: Stories = (await vite.ssrLoadModule("tella/src/stories.ts")).stories;
+  const stories: Stories = (await vite.ssrLoadModule(`tella/${getStoriesPath}`)).stories;
   await vite.close();
 
-  const manifestString = result.output.find(({ fileName }) => fileName === "manifest.json");
-  const manifest: Manifest = JSON.parse(manifestString?.source || "{}");
+  const uiChunk = await getUIManifestChunk();
+  const index = document({ stories, userConfig, src: uiChunk.file, css: uiChunk.css });
+  await writeFile(join(outDir, "index.html"), index, "utf-8");
 
-  for await (const [path, item] of Object.entries(manifest)) {
-    if (path.endsWith(inputUI)) {
-      const index = document({ stories, userConfig, src: item.file, css: item.css });
-      await writeFile(join(outDir, "index.html"), index, "utf-8");
-    }
+  const uiChunkFilePath = join(uiDistRelativePath, uiChunk.file);
+  await copyFile(uiChunkFilePath, join(outDir, uiChunk.file));
 
-    if (path.endsWith(inputStory)) {
-      const story = document({ stories, userConfig, src: item.file, css: item.css });
-      await writeFile(join(outDir, "story.html"), story, "utf-8");
-    }
+  for await (const css of uiChunk.css || []) {
+    const cssDistPath = join(uiDistRelativePath, css);
+    await copyFile(cssDistPath, join(outDir, css));
   }
+
+  const storyManifestString = result.output.find(({ fileName }) => fileName === "manifest.json");
+  const storyManifest: Manifest = JSON.parse(storyManifestString?.source || "{}");
+  const storyChunk = storyManifest[storyFilePath];
+
+  const story = document({ stories, userConfig, src: storyChunk.file, css: storyChunk.css });
+  await writeFile(join(outDir, "story.html"), story, "utf-8");
 
   await writeFile(join(outDir, "tella.json"), JSON.stringify({ stories, config: userConfig }, null, 2), "utf-8");
 }

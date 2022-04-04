@@ -1,11 +1,8 @@
 import { defineTellaConfig } from "tella";
-import type { VueElement } from "vue";
-import { createApp } from "vue/dist/vue.esm-bundler";
+import pluginVue from "@vitejs/plugin-vue";
 
-export default defineTellaConfig<() => VueElement>({
+export default defineTellaConfig({
+  plugins: [pluginVue()],
   base: "/dist_tella/",
   outDir: "/public/dist_tella",
-  render({ root, Story }) {
-    createApp(Story()).mount(root);
-  },
 });

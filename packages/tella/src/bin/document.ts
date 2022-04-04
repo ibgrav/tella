@@ -1,4 +1,4 @@
-import type { Stories, TellaConfig } from "..";
+import type { Stories, TellaConfig } from "../define";
 
 interface DocumentProps {
   src: string;

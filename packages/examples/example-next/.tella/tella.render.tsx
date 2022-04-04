@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import { defineTellaRender } from "tella/dist";
+import { defineTellaRender } from "tella";
 import { createRoot } from "react-dom/client";
 
 import "../src/styles/globals.css";

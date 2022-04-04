@@ -2,9 +2,8 @@
 
 import { join } from "path";
 import { createServer, InlineConfig } from "vite";
-
-import { defineTellaConfig, TellaConfig } from "../index.js";
-import { findFilePath } from "./findFilePath.js";
+import { defineTellaConfig, TellaConfig } from "../define.js";
+import { findFilePath } from "./find-file-path.js";
 import { dev } from "./dev.js";
 import { build } from "./build.js";
 

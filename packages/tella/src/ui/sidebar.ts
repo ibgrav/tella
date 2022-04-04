@@ -1,5 +1,5 @@
-import type { Stories, StoryInstance } from "../..";
-import html from "../html";
+import type { Stories, StoryInstance } from "../define";
+import html from "./html";
 import { stories, pathParam, storyParam } from "../params";
 
 export function sidebar() {

@@ -1,6 +1,6 @@
-import { getCurrentStory } from "../../stories";
+import { getCurrentStory } from "./stories";
 import { pathParam, storyParam } from "../params";
-import { findRender } from "./findRender";
+import { findRender } from "./find-render";
 
 const root = document.getElementById("tella-root")!;
 

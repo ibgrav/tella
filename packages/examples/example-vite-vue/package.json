@@ -6,8 +6,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "stories": "tella dev",
-    "stories:build": "tella build"
+    "tella": "tella dev",
+    "tella:build": "tella build"
   },
   "dependencies": {
     "vue": "^3.2.25"

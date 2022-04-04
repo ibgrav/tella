@@ -1,0 +1,133 @@
+<script lang="ts">
+  import Sidebar from "./Sidebar.svelte";
+  import { stories, config, width_param, height_param } from "../params";
+
+  const { base } = config;
+</script>
+
+<nav>
+  <h1>Tella Stories</h1>
+  <Sidebar item={stories} />
+</nav>
+<main>
+  <div class="main__container main__shadow">
+    <header class="main__shadow">header!</header>
+    <div class="iframe__container">
+      <iframe
+        title="story"
+        width="{width_param || 1920}px"
+        height="{height_param || 1080}px"
+        src="{base}story.html{location.search}"
+      />
+    </div>
+  </div>
+</main>
+
+<style global>
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+  }
+
+  h1,
+  body {
+    margin: 0;
+  }
+
+  body {
+    font-family: "Courier New", monospace;
+    color: rgb(51, 51, 51);
+    background: rgb(246, 249, 252);
+  }
+
+  #tella-root {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: grid;
+    grid-tremplate-columns: repeat(6, 1fr);
+  }
+
+  main {
+    height: 100%;
+    grid-column-start: 2;
+    grid-column-end: 7;
+    overflow: scroll;
+    padding: 1rem 0.5rem 0.5rem 1rem;
+  }
+
+  .main__container {
+    position: relative;
+    padding-top: 50px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 1px 5px 0px;
+    border-radius: 0.3rem;
+    background: rgb(127, 127, 127);
+    height: 100%;
+    width: 100%;
+  }
+
+  header {
+    position: absolute;
+    inset: 0;
+    height: 50px;
+    width: 100%;
+    background: white;
+    padding: 0 1rem;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+  }
+
+  .iframe__container {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    padding: 0.5rem;
+  }
+
+  iframe {
+    border: none;
+    background: white;
+  }
+
+  nav {
+    height: 100%;
+    overflow: scroll;
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+
+  h1 {
+    padding: 1rem 0.5rem;
+  }
+
+  details {
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    font-weight: normal;
+  }
+
+  details:hover {
+    cursor: pointer;
+  }
+
+  details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details a {
+    display: block;
+    margin-left: 1rem;
+  }
+
+  a.active {
+    color: red;
+    font-weight: bold;
+  }
+</style>
