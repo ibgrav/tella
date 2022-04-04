@@ -3,7 +3,7 @@
   "license": "MIT",
   "author": "Isaac Graves",
   "repository": "https://github.com/ibgrav/tella",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "type": "module",
   "types": "dist/define.d.ts",
   "main": "dist/define.js",
@@ -12,9 +12,7 @@
   },
   "files": [
     "dist",
-    "src",
-    "tsconfig.bin.json",
-    "tsconfig.json"
+    "src"
   ],
   "engines": {
     "node": ">=14.14"
