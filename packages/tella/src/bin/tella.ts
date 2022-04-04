@@ -45,11 +45,11 @@ async function exec(arg: string) {
   await vite.close();
 
   if (arg === "dev") {
-    await dev(stories, userConfig, viteConfig);
+    return await dev(stories, userConfig, viteConfig);
   }
 
   if (arg === "build") {
-    await build(stories, userConfig, viteConfig);
+    return await build(stories, userConfig, viteConfig);
   }
 
   throw new Error('missing argument "dev" or "build"');
