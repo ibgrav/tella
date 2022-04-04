@@ -5,13 +5,13 @@ const [, , , typescriptFlag] = process.argv;
 
 export async function create() {
   const pkgString = await readFile(join(process.cwd(), "package.json"), "utf-8");
-  const { dependencies, devDependencies } = JSON.parse(pkgString) as Record<string, Record<string, string>>;
+  const pkg = JSON.parse(pkgString) as Record<string, Record<string, string>>;
 
   let fw = "";
   let plugin = { fn: "", name: "", import: "" };
   let render = { fn: "", import: "", type: "", typeGeneric: "", typeImport: "" };
 
-  if (dependencies.vue) {
+  if (pkg.dependencies.vue) {
     fw = "vue";
 
     plugin.fn = "pluginVue";
@@ -25,7 +25,7 @@ export async function create() {
     render.fn = `createApp(Story()).mount(root);`;
   }
 
-  if (dependencies.react) {
+  if (pkg.dependencies.react) {
     fw = "react";
 
     plugin.fn = "pluginReact";
@@ -35,7 +35,7 @@ export async function create() {
     render.type = "ComponentType";
     render.typeImport = `import type { ${render.type} } from 'react';`;
 
-    if (/^.?18./.test(dependencies.react)) {
+    if (/^.?18./.test(pkg.dependencies.react)) {
       render.import = 'import { createRoot } from "react-dom/client";';
       render.fn = `createRoot(root).render(<Story />);`;
     } else {
@@ -44,7 +44,7 @@ export async function create() {
     }
   }
 
-  if (dependencies.svelte) {
+  if (pkg.dependencies.svelte) {
     fw = "svelte";
 
     plugin.fn = "pluginSvelte";
@@ -56,7 +56,7 @@ export async function create() {
   new Component({ props, target: root });`;
   }
 
-  if (dependencies.preact) {
+  if (pkg.dependencies.preact) {
     fw = "preact";
     plugin.fn = "pluginPreact";
     plugin.name = "@preact/preset-vite";
@@ -70,7 +70,7 @@ export async function create() {
 
   console.log(fw, "detected");
 
-  const IS_TS = typescriptFlag === "--typescript" || devDependencies.typescript;
+  const IS_TS = typescriptFlag === "--typescript" || pkg.devDependencies.typescript;
   if (IS_TS) console.log("typescript detected");
 
   const configFileName = `tella.config.${IS_TS ? "t" : "j"}s`;
@@ -104,4 +104,10 @@ export default defineTellaRender${IS_TS ? `<${render.typeGeneric || render.type}
   await writeFile(join(process.cwd(), renderFileName), tellaRender);
 
   console.log(`\nnpm install -D tella ${plugin.name}\n`);
+
+  pkg.scripts = pkg.scripts || {};
+  pkg.scripts.tella = "tella dev";
+  pkg.scripts["tella:build"] = "tella build";
+
+  await writeFile(join(process.cwd(), "package.json"), JSON.stringify(pkg, null, 2));
 }
