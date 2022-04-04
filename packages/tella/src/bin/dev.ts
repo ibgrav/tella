@@ -13,7 +13,8 @@ export async function dev(userConfig: TellaConfig, viteConfig: InlineConfig) {
     vite.middlewares(req, res, async () => {
       const url = req.url || "/";
 
-      const stories: Stories = (await vite.ssrLoadModule("tella/src/stories.ts")).stories;
+      // const stories: Stories = (await vite.ssrLoadModule("tella/src/stories.ts")).stories;
+      const stories = {};
 
       let src = "node_modules/tella/src/client/ui/index.ui.ts";
 
