@@ -2,9 +2,9 @@
 
 import { join } from "path";
 import { createServer, InlineConfig } from "vite";
-import glob from "fast-glob";
 
 import { defineTellaConfig, Stories, TellaConfig } from "../index.js";
+import { findFilePath } from "./findFilePath.js";
 import { dev } from "./dev.js";
 import { build } from "./build.js";
 
@@ -15,16 +15,16 @@ exec(arg);
 async function exec(arg: string) {
   let vite = await createServer();
 
-  const userConfigName = (await glob("tella.config.*"))[0];
+  const configFilePath = await findFilePath("tella.config");
+  const userConfigModule: TellaConfig = (await vite.ssrLoadModule(configFilePath)).default;
 
-  const userConfigModule: TellaConfig = (await vite.ssrLoadModule(userConfigName)).default;
   await vite.close();
 
   const userConfig = defineTellaConfig(userConfigModule);
 
   const viteConfig: InlineConfig = {
-    plugins: userConfig.plugins || [],
     configFile: false,
+    plugins: userConfig.plugins || [],
     publicDir: userConfig.publicDir || false,
     server: { middlewareMode: "ssr" },
     optimizeDeps: {
@@ -47,7 +47,10 @@ async function exec(arg: string) {
   if (arg === "dev") {
     await dev(stories, userConfig, viteConfig);
   }
+
   if (arg === "build") {
     await build(stories, userConfig, viteConfig);
   }
+
+  throw new Error('missing argument "dev" or "build"');
 }

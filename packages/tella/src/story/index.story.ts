@@ -1,14 +1,11 @@
 import { getCurrentStory } from "../stories";
 import { pathParam, storyParam } from "../lib/params";
-import type { TellaRenderFunction } from "..";
+import { findRender } from "./findRender";
 
 const root = document.getElementById("tella-root")!;
 
-const renderGlob = import.meta.globEager(`tella_root/tella.render.*`);
-const [, mod] = Object.entries(renderGlob)[0];
-const render = mod?.default as TellaRenderFunction;
-
 (async () => {
+  const render = findRender();
   const Story = getCurrentStory(pathParam, storyParam);
 
   if (Story && typeof render === "function") {
