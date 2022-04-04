@@ -3,7 +3,7 @@
   "license": "MIT",
   "author": "Isaac Graves",
   "repository": "https://github.com/ibgrav/tella",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "type": "module",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
