@@ -3,7 +3,7 @@ import { InlineConfig, createServer } from "vite";
 import { Server } from "http";
 import { document } from "./document.js";
 
-export async function dev(stories: Stories, userConfig: TellaConfig, viteConfig: InlineConfig) {
+export async function dev(userConfig: TellaConfig, viteConfig: InlineConfig) {
   const vite = await createServer(viteConfig);
 
   //do not accept user base in dev mode
@@ -12,6 +12,8 @@ export async function dev(stories: Stories, userConfig: TellaConfig, viteConfig:
   const server = new Server((req, res) => {
     vite.middlewares(req, res, async () => {
       const url = req.url || "/";
+
+      const stories: Stories = (await vite.ssrLoadModule("tella/src/stories.ts")).stories;
 
       let src = "node_modules/tella/src/ui/index.ui.ts";
 

@@ -40,16 +40,12 @@ async function exec(arg: string) {
     },
   };
 
-  vite = await createServer(viteConfig);
-  const stories: Stories = (await vite.ssrLoadModule("tella/src/stories.ts")).stories;
-  await vite.close();
-
   if (arg === "dev") {
-    return await dev(stories, userConfig, viteConfig);
+    return await dev(userConfig, viteConfig);
   }
 
   if (arg === "build") {
-    return await build(stories, userConfig, viteConfig);
+    return await build(userConfig, viteConfig);
   }
 
   throw new Error('missing argument "dev" or "build"');

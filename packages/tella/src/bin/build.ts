@@ -1,14 +1,14 @@
 import type { Stories, TellaConfig } from "..";
 import { join } from "path";
 import { rm, writeFile } from "fs/promises";
-import { InlineConfig, build as viteBuild, Manifest } from "vite";
+import { InlineConfig, build as viteBuild, Manifest, createServer } from "vite";
 import { document } from "./document.js";
 
 interface BuildResult {
   output: Array<{ fileName: string; source: string }>;
 }
 
-export async function build(stories: Stories, userConfig: TellaConfig, viteConfig: InlineConfig) {
+export async function build(userConfig: TellaConfig, viteConfig: InlineConfig) {
   const outDir = join(process.cwd(), userConfig.outDir || "dist_tella");
 
   if (userConfig.clean !== false) {
@@ -34,6 +34,10 @@ export async function build(stories: Stories, userConfig: TellaConfig, viteConfi
       },
     },
   })) as BuildResult;
+
+  const vite = await createServer(viteConfig);
+  const stories: Stories = (await vite.ssrLoadModule("tella/src/stories.ts")).stories;
+  await vite.close();
 
   const manifestString = result.output.find(({ fileName }) => fileName === "manifest.json");
   const manifest: Manifest = JSON.parse(manifestString?.source || "{}");
