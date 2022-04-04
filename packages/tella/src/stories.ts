@@ -9,7 +9,6 @@ export const stories: Stories = {};
 for (const [__path, mod] of Object.entries(storiesGlob)) {
   const { title } = mod.default;
   const __stories = Object.keys(mod).filter((n) => n !== "default");
-
   dset(stories, title.split("/"), { __config: mod.default, __path, __stories });
 }
 
