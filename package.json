@@ -1,7 +1,5 @@
 {
-  "name": "@ibgrav/tella-repo",
-  "private": true,
-  "scripts": {
-    "dev": "pnpm -F tella build && pnpm install && pnpm -F"
-  }
+  "name": "@ibgrav/tella",
+  "packageManager": "pnpm@7.27.0",
+  "private": true
 }
